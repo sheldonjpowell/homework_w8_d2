@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Nav from "./components/Nav";
+import Home from './views/Home';
+import RacerTable from './views/RacerTable';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default class App extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            count: 0,
+            name: null
+        }
+    }
+
+
+    handleButtonClick = (step) => {
+        let newCount = this.state.count + step;
+        this.setState({
+            count: newCount
+        })
+    }
+
+    handleNameChange = (name) => {
+        this.setState({name})
+    }
+
+    render(){
+
+        return (
+            <>
+                <Nav />
+                <div className='container'>
+                    <Routes>
+                        <Route path='/' element={<Home 
+                                                    handleClick={this.handleButtonClick} 
+                                                    count={this.state.count} 
+                                                    name={this.state.name}
+                                                    handleNameChange={this.handleNameChange}
+                                                />} />
+                        <Route path='racers' element={<RacerTable />} />
+                    </Routes>
+                </div>
+            </>
+        )
+    }
 }
-
-export default App;
